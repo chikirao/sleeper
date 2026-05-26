@@ -16,20 +16,24 @@
 
 html {
   min-width: 320px;
-  min-height: 100%;
-  overflow-x: hidden;
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
 }
 
 body {
   position: relative;
   min-width: 320px;
-  min-height: 100svh;
+  height: 100dvh;
   margin: 0;
-  overflow-x: hidden;
+  overflow: hidden;
+  overscroll-behavior: none;
+  touch-action: manipulation;
   background:
-    linear-gradient(180deg, #000 0 18%, rgba(0, 0, 0, 0.94) 24%, rgba(0, 0, 0, 0.38) 33%, rgba(0, 0, 0, 0) 42%),
-    radial-gradient(120% 46% at 19% 33%, #fff 0 34%, rgba(255, 255, 255, 0.96) 44%, rgba(255, 255, 255, 0.5) 60%, rgba(255, 255, 255, 0) 76%),
-    linear-gradient(180deg, #000 0 28%, #2b2b2b 34%, #d8d8d8 42%, #fff 52% 100%);
+    linear-gradient(180deg, #000 0 13%, rgba(0, 0, 0, 0.92) 16%, rgba(0, 0, 0, 0.5) 21%, rgba(0, 0, 0, 0.13) 27%, transparent 34%),
+    radial-gradient(120% 48% at 18% 31%, #fff 0 36%, rgba(255, 255, 255, 0.96) 46%, rgba(255, 255, 255, 0.58) 59%, rgba(255, 255, 255, 0.14) 74%, transparent 88%),
+    radial-gradient(92% 38% at 86% 32%, rgba(255, 255, 255, 0.58) 0 28%, rgba(255, 255, 255, 0.18) 56%, transparent 82%),
+    linear-gradient(180deg, #000 0 26%, #3c3c3c 35%, #d5d5d5 44%, #fff 57% 100%);
 }
 
 body::before {
@@ -39,12 +43,12 @@ body::before {
   min-height: 100%;
   content: "";
   pointer-events: none;
-  opacity: 0.62;
+  opacity: 0.74;
   mix-blend-mode: overlay;
-  -webkit-mask-image: linear-gradient(180deg, #000 0 50%, rgba(0, 0, 0, 0.45) 62%, transparent 78%);
-  mask-image: linear-gradient(180deg, #000 0 50%, rgba(0, 0, 0, 0.45) 62%, transparent 78%);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='table' tableValues='0 0.85'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
-  background-size: 150px 150px;
+  -webkit-mask-image: linear-gradient(180deg, #000 0 47%, rgba(0, 0, 0, 0.52) 62%, transparent 82%);
+  mask-image: linear-gradient(180deg, #000 0 47%, rgba(0, 0, 0, 0.52) 62%, transparent 82%);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96' viewBox='0 0 96 96'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.65' numOctaves='2' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='1.4 0 0 0 -0.22 0 1.4 0 0 -0.22 0 0 1.4 0 -0.22 0 0 0 1 0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='discrete' tableValues='0 .18 .42 .72 1'/%3E%3CfeFuncG type='discrete' tableValues='0 .18 .42 .72 1'/%3E%3CfeFuncB type='discrete' tableValues='0 .18 .42 .72 1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='96' height='96' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 112px 112px;
 }
 
 button,
@@ -57,14 +61,18 @@ button {
 }
 
 #root {
-  min-height: 100svh;
+  height: 100dvh;
+  overflow: hidden;
 }
 
 .sky {
   position: absolute;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: auto;
+  left: 0;
   z-index: 0;
-  height: min(39svh, 350px);
+  height: min(34dvh, 300px);
   overflow: hidden;
   pointer-events: none;
   color: #fff;
@@ -73,8 +81,8 @@ button {
 
 .sky__symbols {
   position: absolute;
-  inset: max(18px, env(safe-area-inset-top)) 18px auto;
-  height: min(29svh, 250px);
+  inset: max(16px, env(safe-area-inset-top)) 18px auto;
+  height: min(26dvh, 228px);
 }
 
 .sky__symbol {
@@ -86,9 +94,10 @@ button {
   color: #fff;
   opacity: var(--opacity);
   font-size: var(--size);
-  font-weight: 700;
+  font-family: "Oswald", "Arial Narrow", sans-serif;
+  font-weight: 300;
   line-height: 1;
-  text-shadow: 0 0 1px #fff;
+  text-shadow: 0 0 2px #fff;
   transform: translate3d(0, 0, 0);
   animation:
     star-drift calc(var(--duration) * 4) ease-in-out var(--delay) infinite alternate,
@@ -99,24 +108,24 @@ button {
   position: relative;
   z-index: 2;
   width: 100%;
-  min-height: 100svh;
-  padding: max(48px, calc(34px + env(safe-area-inset-top))) 18px max(18px, env(safe-area-inset-bottom));
+  height: 100dvh;
+  padding: max(12px, env(safe-area-inset-top)) 18px max(12px, env(safe-area-inset-bottom));
   display: flex;
   justify-content: center;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 .calculator {
   width: min(calc(100vw - 56px), 420px);
   max-width: 300px;
   min-width: 0;
-  padding-top: clamp(104px, 19svh, 168px);
+  padding-top: clamp(126px, 18dvh, 166px);
 }
 
 .calculator__header {
   display: flex;
   align-items: center;
-  margin-bottom: 14px;
+  margin-bottom: 8px;
   min-width: 0;
 }
 
@@ -143,12 +152,12 @@ h2 {
 
 h1 {
   min-width: 0;
-  font-size: clamp(54px, 14.3vw, 72px);
-  line-height: 0.86;
+  font-size: clamp(50px, 13.4vw, 68px);
+  line-height: 0.84;
 }
 
 .result-heading {
-  padding-bottom: 12px;
+  padding-bottom: 8px;
   border-bottom: 1px solid #9a9a9a;
 }
 
@@ -161,9 +170,9 @@ h1 {
 
 .result-heading time {
   display: block;
-  margin-top: 6px;
-  font-size: clamp(56px, 16.5vw, 76px);
-  line-height: 0.86;
+  margin-top: 5px;
+  font-size: clamp(52px, 15.2vw, 72px);
+  line-height: 0.84;
   letter-spacing: 0;
 }
 
@@ -172,7 +181,7 @@ h1 {
   gap: 0;
   width: 100%;
   max-width: 100%;
-  margin: 8px 0 18px;
+  margin: 6px 0 14px;
   padding: 0;
   list-style: none;
 }
@@ -186,7 +195,7 @@ h1 {
   max-width: 100%;
   overflow: hidden;
   min-width: 0;
-  min-height: 34px;
+  min-height: 31px;
   padding: 0 8px;
   border-bottom: 1px solid #bdbdbd;
   font-size: 17px;
@@ -203,7 +212,7 @@ h1 {
 }
 
 .cycle-row--recommended {
-  margin: 3px 0;
+  margin: 2px 0;
   border-color: #000;
   background: #000;
   color: #fff;
@@ -222,9 +231,9 @@ h1 {
 
 .info-block {
   display: grid;
-  gap: 9px;
-  margin-top: 18px;
-  padding: 13px 15px;
+  gap: 8px;
+  margin-top: 14px;
+  padding: 11px 14px;
   border: 1px solid #7a7a7a;
   font-size: 15px;
   line-height: 1.1;
@@ -234,12 +243,12 @@ h1 {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
-  margin-top: 14px;
+  margin-top: 12px;
 }
 
 .mode-button,
 .calculate-button {
-  min-height: 56px;
+  min-height: 50px;
   border: 1px solid #000;
   border-radius: 0;
   background: rgba(255, 255, 255, 0.78);
@@ -250,7 +259,22 @@ h1 {
 
 @media (max-width: 430px) {
   .calculator {
-    max-width: 334px;
+    max-width: 342px;
+  }
+
+  .result-heading p,
+  .time-panel p,
+  .time-control span {
+    font-size: 15px;
+  }
+
+  .cycle-row,
+  .cycle-row time {
+    font-size: 16px;
+  }
+
+  .info-block {
+    font-size: 14px;
   }
 }
 
@@ -263,20 +287,20 @@ h1 {
 
 .time-panel {
   display: grid;
-  gap: 14px;
-  margin: 0 0 20px;
+  gap: 10px;
+  margin: 0 0 14px;
 }
 
 .time-panel__copy {
   display: grid;
-  gap: 8px;
+  gap: 6px;
 }
 
 .time-panel h2 {
   font-family: "Oswald", "Arial Narrow", sans-serif;
   font-weight: 600;
-  font-size: clamp(42px, 13vw, 58px);
-  line-height: 0.95;
+  font-size: clamp(38px, 11vw, 54px);
+  line-height: 0.9;
 }
 
 .time-control {
@@ -286,20 +310,20 @@ h1 {
 
 .time-control input {
   width: 100%;
-  min-height: 68px;
+  min-height: 58px;
   padding: 0 18px;
   border: 1px solid #8b8b8b;
   border-radius: 0;
   background: rgba(255, 255, 255, 0.78);
   color: #000;
-  font-size: 32px;
+  font-size: 30px;
   line-height: 1;
   appearance: none;
   -webkit-appearance: none;
 }
 
 .calculate-button {
-  min-height: 54px;
+  min-height: 48px;
 }
 
 @keyframes star-drift {
@@ -338,18 +362,53 @@ h1 {
 @media (min-width: 720px) {
   body {
     background:
-      linear-gradient(180deg, #000 0 18%, rgba(0, 0, 0, 0.94) 24%, rgba(0, 0, 0, 0.38) 33%, rgba(0, 0, 0, 0) 42%),
-      radial-gradient(78% 46% at 22% 33%, #fff 0 34%, rgba(255, 255, 255, 0.96) 44%, rgba(255, 255, 255, 0.5) 60%, rgba(255, 255, 255, 0) 76%),
-      linear-gradient(180deg, #000 0 28%, #2b2b2b 34%, #d8d8d8 42%, #fff 52% 100%);
+      linear-gradient(180deg, #000 0 13%, rgba(0, 0, 0, 0.92) 16%, rgba(0, 0, 0, 0.5) 21%, rgba(0, 0, 0, 0.13) 27%, transparent 34%),
+      radial-gradient(84% 48% at 20% 31%, #fff 0 36%, rgba(255, 255, 255, 0.96) 46%, rgba(255, 255, 255, 0.58) 59%, rgba(255, 255, 255, 0.14) 74%, transparent 88%),
+      radial-gradient(76% 38% at 84% 32%, rgba(255, 255, 255, 0.58) 0 28%, rgba(255, 255, 255, 0.18) 56%, transparent 82%),
+      linear-gradient(180deg, #000 0 26%, #3c3c3c 35%, #d5d5d5 44%, #fff 57% 100%);
   }
 
   .app-shell {
-    padding-top: 84px;
+    padding-top: 24px;
   }
 
   .calculator {
     max-width: 420px;
-    padding-top: 150px;
+    padding-top: 154px;
+  }
+}
+
+@media (max-height: 720px) {
+  .calculator {
+    padding-top: clamp(96px, 15dvh, 116px);
+  }
+
+  h1 {
+    font-size: clamp(42px, 11vw, 56px);
+  }
+
+  .result-heading time {
+    font-size: clamp(46px, 13.5vw, 62px);
+  }
+
+  .cycle-row {
+    min-height: 27px;
+  }
+
+  .info-block {
+    gap: 5px;
+    margin-top: 10px;
+    padding: 9px 12px;
+    font-size: 13px;
+  }
+
+  .bottom-actions {
+    margin-top: 9px;
+  }
+
+  .mode-button,
+  .calculate-button {
+    min-height: 44px;
   }
 }
 

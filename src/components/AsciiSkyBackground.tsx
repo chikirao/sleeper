@@ -14,19 +14,25 @@ interface StarToken {
 }
 
 function createStarTokens(): StarToken[] {
-  const symbols = ["*", "*", "*", "*", "×", "x", "+", "-", "·", "."];
+  const symbols = ["*", "*", "*", "*", "*", "*", "+", "+"];
 
-  return Array.from({ length: 82 }, (_, id) => ({
-    id,
-    symbol: symbols[id % symbols.length],
-    x: (id * 29 + (id % 6) * 11) % 100,
-    y: (id * 17 + (id % 9) * 3) % 58,
-    size: 11 + ((id * 7) % 9),
-    opacity: 1,
-    duration: 4.6 + (id % 8) * 0.55,
-    delay: -(id % 19) * 0.37,
-    drift: ((id % 7) - 3) * 0.6,
-  }));
+  return Array.from({ length: 42 }, (_, id) => {
+    const x = 2 + ((id * 31 + (id % 5) * 13) % 95);
+    const lowerEdge = x > 72 ? 78 : x < 26 ? 58 : 46;
+    const rawY = (id * 19 + (id % 7) * 6) % lowerEdge;
+
+    return {
+      id,
+      symbol: symbols[id % symbols.length],
+      x,
+      y: 3 + rawY,
+      size: 20 + ((id * 7) % 15),
+      opacity: 1,
+      duration: 3.2 + (id % 8) * 0.42,
+      delay: -(id % 17) * 0.31,
+      drift: ((id % 7) - 3) * 0.42,
+    };
+  });
 }
 
 export function AsciiSkyBackground() {
