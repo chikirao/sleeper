@@ -1,4 +1,4 @@
-const CACHE_NAME = "sleeper-v2";
+const CACHE_NAME = "sleeper-v3";
 const ASSET_PATHS = [
   "/sleeper/",
   "/sleeper/assets/index.css",
@@ -30,6 +30,25 @@ self.addEventListener("activate", (event) => {
 
 self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") {
+    return;
+  }
+
+  const requestUrl = new URL(event.request.url);
+  const shouldRefreshFirst =
+    requestUrl.pathname === "/sleeper/" ||
+    requestUrl.pathname === "/sleeper/assets/index.css" ||
+    requestUrl.pathname === "/sleeper/assets/index.js";
+
+  if (shouldRefreshFirst) {
+    event.respondWith(
+      fetch(event.request)
+        .then((response) => {
+          const responseClone = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, responseClone));
+          return response;
+        })
+        .catch(() => caches.match(event.request).then((cached) => cached || caches.match("/sleeper/"))),
+    );
     return;
   }
 
