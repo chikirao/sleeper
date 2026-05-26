@@ -112,8 +112,24 @@ button {
   height: 100dvh;
   padding: max(12px, env(safe-area-inset-top)) 18px max(12px, env(safe-area-inset-bottom));
   display: flex;
+  align-items: flex-start;
   justify-content: center;
   overflow: hidden;
+}
+
+.app-shell--mobile,
+.app-shell--standalone {
+  height: 100svh;
+  min-height: 100svh;
+  padding-bottom: 0;
+}
+
+@supports (-webkit-touch-callout: none) {
+  .app-shell--mobile,
+  .app-shell--standalone {
+    height: -webkit-fill-available;
+    min-height: -webkit-fill-available;
+  }
 }
 
 .calculator {
@@ -125,7 +141,7 @@ button {
 
 .back-button + .calculator {
   max-height: calc(100dvh - max(58px, calc(env(safe-area-inset-top) + 46px)));
-  padding-bottom: max(14px, env(safe-area-inset-bottom));
+  padding-bottom: 14px;
   overflow-x: hidden;
   overflow-y: auto;
   overscroll-behavior: contain;
@@ -138,6 +154,7 @@ button {
 
 .app-shell--mobile .back-button + .calculator,
 .app-shell--standalone .back-button + .calculator {
+  max-height: calc(100svh - max(48px, calc(env(safe-area-inset-top) + 38px)));
   padding-top: clamp(128px, 20dvh, 164px);
 }
 
@@ -353,10 +370,14 @@ h1 {
   }
 
   .app-shell--mobile .cycle-row,
+  .app-shell--standalone .cycle-row {
+    min-height: 27px;
+  }
+
+  .app-shell--mobile .cycle-row,
   .app-shell--mobile .cycle-row time,
   .app-shell--standalone .cycle-row,
   .app-shell--standalone .cycle-row time {
-    min-height: 27px;
     font-size: 15px;
   }
 
