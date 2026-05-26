@@ -39,6 +39,7 @@ export function SleepCalculator() {
   const subtitle = mode === "now" ? "если лечь сейчас" : mode === "wake" ? "если лечь в" : "чтобы встать в";
   const baseTime =
     mode === "now" ? formatClock(now) : mode === "wake" ? confirmedSleepInput : confirmedWakeInput;
+  const shouldShowInfoBlock = mode === "now" || runtimeEnvironment === "desktop-browser";
 
   const handleModeChange = (nextMode: CalculatorMode) => {
     setMode(nextMode);
@@ -125,7 +126,7 @@ export function SleepCalculator() {
         </section>
 
         <CycleList results={results} />
-        <InfoBlock />
+        {shouldShowInfoBlock && <InfoBlock />}
         <BottomActions activeMode={mode} onModeChange={handleModeChange} />
       </section>
     </main>
