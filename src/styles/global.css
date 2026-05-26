@@ -1,0 +1,360 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  color: #000;
+  background: #fff;
+  font-family: "Ubuntu Mono", "JetBrains Mono", "IBM Plex Mono", monospace;
+  font-synthesis: none;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  min-width: 320px;
+  min-height: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  position: relative;
+  min-width: 320px;
+  min-height: 100svh;
+  margin: 0;
+  overflow-x: hidden;
+  background:
+    linear-gradient(180deg, #000 0 18%, rgba(0, 0, 0, 0.94) 24%, rgba(0, 0, 0, 0.38) 33%, rgba(0, 0, 0, 0) 42%),
+    radial-gradient(120% 46% at 19% 33%, #fff 0 34%, rgba(255, 255, 255, 0.96) 44%, rgba(255, 255, 255, 0.5) 60%, rgba(255, 255, 255, 0) 76%),
+    linear-gradient(180deg, #000 0 28%, #2b2b2b 34%, #d8d8d8 42%, #fff 52% 100%);
+}
+
+body::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  min-height: 100%;
+  content: "";
+  pointer-events: none;
+  opacity: 0.62;
+  mix-blend-mode: overlay;
+  -webkit-mask-image: linear-gradient(180deg, #000 0 50%, rgba(0, 0, 0, 0.45) 62%, transparent 78%);
+  mask-image: linear-gradient(180deg, #000 0 50%, rgba(0, 0, 0, 0.45) 62%, transparent 78%);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='table' tableValues='0 0.85'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 150px 150px;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  color: inherit;
+}
+
+#root {
+  min-height: 100svh;
+}
+
+.sky {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  height: min(39svh, 350px);
+  overflow: hidden;
+  pointer-events: none;
+  color: #fff;
+  mix-blend-mode: normal;
+}
+
+.sky__symbols {
+  position: absolute;
+  inset: max(18px, env(safe-area-inset-top)) 18px auto;
+  height: min(29svh, 250px);
+}
+
+.sky__symbol {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: 12px;
+  height: 12px;
+  color: #fff;
+  opacity: var(--opacity);
+  font-size: var(--size);
+  font-weight: 700;
+  line-height: 1;
+  text-shadow: 0 0 1px #fff;
+  transform: translate3d(0, 0, 0);
+  animation:
+    star-drift calc(var(--duration) * 4) ease-in-out var(--delay) infinite alternate,
+    star-flicker var(--duration) steps(2, end) var(--delay) infinite;
+}
+
+.app-shell {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  min-height: 100svh;
+  padding: max(48px, calc(34px + env(safe-area-inset-top))) 18px max(18px, env(safe-area-inset-bottom));
+  display: flex;
+  justify-content: center;
+  overflow-x: hidden;
+}
+
+.calculator {
+  width: min(calc(100vw - 56px), 420px);
+  max-width: 300px;
+  min-width: 0;
+  padding-top: clamp(104px, 19svh, 168px);
+}
+
+.calculator__header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 14px;
+  min-width: 0;
+}
+
+.app-logo {
+  display: block;
+  width: 42px;
+  height: 42px;
+  image-rendering: crisp-edges;
+}
+
+h1,
+h2,
+p {
+  margin: 0;
+}
+
+h1,
+h2 {
+  font-family: "Oswald", "Arial Narrow", sans-serif;
+  font-weight: 300;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+h1 {
+  min-width: 0;
+  font-size: clamp(54px, 14.3vw, 72px);
+  line-height: 0.86;
+}
+
+.result-heading {
+  padding-bottom: 12px;
+  border-bottom: 1px solid #9a9a9a;
+}
+
+.result-heading p,
+.time-panel p,
+.time-control span {
+  font-size: 16px;
+  line-height: 1.2;
+}
+
+.result-heading time {
+  display: block;
+  margin-top: 6px;
+  font-size: clamp(56px, 16.5vw, 76px);
+  line-height: 0.86;
+  letter-spacing: 0;
+}
+
+.cycle-list {
+  display: grid;
+  gap: 0;
+  width: 100%;
+  max-width: 100%;
+  margin: 8px 0 18px;
+  padding: 0;
+  list-style: none;
+}
+
+.cycle-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) max-content;
+  column-gap: 16px;
+  align-items: center;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  min-width: 0;
+  min-height: 34px;
+  padding: 0 8px;
+  border-bottom: 1px solid #bdbdbd;
+  font-size: 17px;
+  line-height: 1;
+}
+
+.cycle-row span {
+  min-width: 0;
+  padding-right: 0;
+}
+
+.cycle-row:first-child {
+  border-top: 0;
+}
+
+.cycle-row--recommended {
+  margin: 3px 0;
+  border-color: #000;
+  background: #000;
+  color: #fff;
+}
+
+.cycle-row time {
+  position: static;
+  transform: none;
+  justify-self: end;
+  min-width: 5ch;
+  text-align: right;
+  font-size: 17px;
+  color: currentColor;
+  z-index: 2;
+}
+
+.info-block {
+  display: grid;
+  gap: 9px;
+  margin-top: 18px;
+  padding: 13px 15px;
+  border: 1px solid #7a7a7a;
+  font-size: 15px;
+  line-height: 1.1;
+}
+
+.bottom-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.mode-button,
+.calculate-button {
+  min-height: 56px;
+  border: 1px solid #000;
+  border-radius: 0;
+  background: rgba(255, 255, 255, 0.78);
+  text-transform: uppercase;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+@media (max-width: 430px) {
+  .calculator {
+    max-width: 334px;
+  }
+}
+
+.mode-button--active,
+.mode-button:active,
+.calculate-button:active {
+  background: #000;
+  color: #fff;
+}
+
+.time-panel {
+  display: grid;
+  gap: 14px;
+  margin: 0 0 20px;
+}
+
+.time-panel__copy {
+  display: grid;
+  gap: 8px;
+}
+
+.time-panel h2 {
+  font-family: "Oswald", "Arial Narrow", sans-serif;
+  font-weight: 600;
+  font-size: clamp(42px, 13vw, 58px);
+  line-height: 0.95;
+}
+
+.time-control {
+  display: grid;
+  gap: 8px;
+}
+
+.time-control input {
+  width: 100%;
+  min-height: 68px;
+  padding: 0 18px;
+  border: 1px solid #8b8b8b;
+  border-radius: 0;
+  background: rgba(255, 255, 255, 0.78);
+  color: #000;
+  font-size: 32px;
+  line-height: 1;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.calculate-button {
+  min-height: 54px;
+}
+
+@keyframes star-drift {
+  0% {
+    transform: translate3d(calc(var(--drift) * -0.7), -1px, 0);
+  }
+
+  100% {
+    transform: translate3d(var(--drift), 3px, 0);
+  }
+}
+
+@keyframes star-flicker {
+  0%,
+  28%,
+  100% {
+    opacity: 1;
+  }
+
+  29%,
+  54% {
+    opacity: 0;
+  }
+
+  55%,
+  72% {
+    opacity: 1;
+  }
+
+  73%,
+  88% {
+    opacity: 0;
+  }
+}
+
+@media (min-width: 720px) {
+  body {
+    background:
+      linear-gradient(180deg, #000 0 18%, rgba(0, 0, 0, 0.94) 24%, rgba(0, 0, 0, 0.38) 33%, rgba(0, 0, 0, 0) 42%),
+      radial-gradient(78% 46% at 22% 33%, #fff 0 34%, rgba(255, 255, 255, 0.96) 44%, rgba(255, 255, 255, 0.5) 60%, rgba(255, 255, 255, 0) 76%),
+      linear-gradient(180deg, #000 0 28%, #2b2b2b 34%, #d8d8d8 42%, #fff 52% 100%);
+  }
+
+  .app-shell {
+    padding-top: 84px;
+  }
+
+  .calculator {
+    max-width: 420px;
+    padding-top: 150px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sky__symbol {
+    animation: none;
+  }
+}
