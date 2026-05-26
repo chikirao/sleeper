@@ -123,6 +123,24 @@ button {
   padding-top: clamp(126px, 18dvh, 166px);
 }
 
+.back-button + .calculator {
+  max-height: calc(100dvh - max(58px, calc(env(safe-area-inset-top) + 46px)));
+  padding-bottom: max(14px, env(safe-area-inset-bottom));
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+}
+
+.back-button + .calculator::-webkit-scrollbar {
+  display: none;
+}
+
+.app-shell--mobile .back-button + .calculator,
+.app-shell--standalone .back-button + .calculator {
+  padding-top: clamp(150px, 24dvh, 188px);
+}
+
 .calculator__header {
   display: flex;
   align-items: center;
@@ -408,7 +426,26 @@ h1 {
     width: min(30vw, 420px);
     min-width: 340px;
     max-width: 420px;
+    max-height: 100dvh;
     padding-top: clamp(146px, 21dvh, 166px);
+    padding-bottom: 28px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable both-edges;
+    scrollbar-width: thin;
+  }
+
+  .app-shell--desktop-browser .calculator::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .app-shell--desktop-browser .calculator::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .app-shell--desktop-browser .calculator::-webkit-scrollbar-thumb {
+    background: #000;
   }
 
   .app-shell--desktop-browser .back-button {
@@ -417,11 +454,12 @@ h1 {
     min-width: 340px;
     max-width: 420px;
     min-height: 36px;
-    margin: 82px auto 8px;
+    margin: 136px auto 10px;
     background: rgba(255, 255, 255, 0.84);
   }
 
   .app-shell--desktop-browser .back-button + .calculator {
+    max-height: calc(100dvh - 182px);
     padding-top: 0;
   }
 
@@ -490,7 +528,11 @@ h1 {
   .app-shell--desktop-browser .back-button {
     width: min(27vw, 380px);
     min-width: 320px;
-    margin-top: 72px;
+    margin-top: 132px;
+  }
+
+  .app-shell--desktop-browser .back-button + .calculator {
+    max-height: calc(100dvh - 178px);
   }
 
   .app-shell--desktop-browser h1 {
