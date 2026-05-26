@@ -1,4 +1,4 @@
-const CACHE_NAME = "sleeper-v3";
+const CACHE_NAME = "sleeper-v4";
 const ASSET_PATHS = [
   "/sleeper/",
   "/sleeper/assets/index.css",

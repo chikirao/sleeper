@@ -10,13 +10,13 @@
   "orientation": "portrait",
   "icons": [
     {
-      "src": "icon-512.png",
+      "src": "/sleeper/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "apple-touch-icon.png",
+      "src": "/sleeper/apple-touch-icon.png",
       "sizes": "512x512",
       "type": "image/png"
     }

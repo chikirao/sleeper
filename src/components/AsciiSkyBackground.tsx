@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { CSSProperties } from "react";
 
 interface StarToken {
@@ -11,6 +11,9 @@ interface StarToken {
   duration: number;
   delay: number;
   drift: number;
+  blinkDelay: number;
+  blinkInterval: number;
+  blinkHold: number;
 }
 
 function createStarTokens(): StarToken[] {
@@ -31,19 +34,71 @@ function createStarTokens(): StarToken[] {
       duration: 40.2 + (id % 8) * 0.42,
       delay: -(id % 17) * 0.31,
       drift: ((id % 7) - 3) * 0.42,
+      blinkDelay: 300 + ((id * 977) % 9000),
+      blinkInterval: 6500 + ((id * 719) % 8500),
+      blinkHold: 900 + ((id * 431) % 2200),
     };
   });
 }
 
 export function AsciiSkyBackground() {
   const stars = useMemo(createStarTokens, []);
+  const timersRef = useRef<number[]>([]);
+  const [visibleStars, setVisibleStars] = useState<boolean[]>(() =>
+    stars.map(() => true),
+  );
+
+  useEffect(() => {
+    const setStarVisibility = (id: number, isVisible: boolean) => {
+      setVisibleStars((current) =>
+        current.map((visible, starId) => (starId === id ? isVisible : visible)),
+      );
+    };
+
+    const clearTimers = () => {
+      timersRef.current.forEach((timerId) => window.clearTimeout(timerId));
+      timersRef.current = [];
+    };
+
+    const scheduleBlink = (star: StarToken, delay: number) => {
+      const offTimerId = window.setTimeout(() => {
+        setStarVisibility(star.id, false);
+
+        const onTimerId = window.setTimeout(() => {
+          setStarVisibility(star.id, true);
+          scheduleBlink(star, star.blinkInterval);
+        }, star.blinkHold);
+
+        timersRef.current.push(onTimerId);
+      }, delay);
+
+      timersRef.current.push(offTimerId);
+    };
+
+    stars.forEach((star) => scheduleBlink(star, star.blinkDelay));
+
+    const handleResume = () => {
+      clearTimers();
+      setVisibleStars(stars.map(() => true));
+      stars.forEach((star) => scheduleBlink(star, star.blinkDelay));
+    };
+
+    document.addEventListener("visibilitychange", handleResume);
+    window.addEventListener("focus", handleResume);
+
+    return () => {
+      clearTimers();
+      document.removeEventListener("visibilitychange", handleResume);
+      window.removeEventListener("focus", handleResume);
+    };
+  }, [stars]);
 
   return (
     <div className="sky" aria-hidden="true">
       <div className="sky__symbols">
         {stars.map((star) => (
           <span
-            className="sky__symbol"
+            className={`sky__symbol${visibleStars[star.id] ? "" : " sky__symbol--off"}`}
             key={star.id}
             style={
               {

@@ -98,9 +98,12 @@ button {
   line-height: 1;
   text-shadow: 0 0 2px #fff;
   transform: translate3d(0, 0, 0);
-  animation:
-    star-drift calc(var(--duration) * 4) ease-in-out var(--delay) infinite alternate,
-    star-flicker var(--duration) step-end var(--delay) infinite;
+  animation: star-drift calc(var(--duration) * 4) ease-in-out var(--delay) infinite alternate;
+  will-change: transform;
+}
+
+.sky__symbol--off {
+  opacity: 0;
 }
 
 .app-shell {
@@ -349,18 +352,6 @@ h1 {
 
   100% {
     transform: translate3d(var(--drift), 3px, 0);
-  }
-}
-
-@keyframes star-flicker {
-  0%,
-  47.999% {
-    opacity: 1;
-  }
-
-  48%,
-  100% {
-    opacity: 0;
   }
 }
 
