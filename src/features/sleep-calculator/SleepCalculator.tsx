@@ -1,5 +1,6 @@
 import { PointerEvent, TouchEvent, useMemo, useRef, useState } from "react";
 import { useNowClock } from "../../hooks/useNowClock";
+import { useRuntimeEnvironment } from "../../hooks/useRuntimeEnvironment";
 import {
   calculateSleepTimes,
   calculateWakeTimes,
@@ -15,6 +16,7 @@ import { CalculatorMode } from "./types";
 
 export function SleepCalculator() {
   const now = useNowClock();
+  const runtimeEnvironment = useRuntimeEnvironment();
   const [mode, setMode] = useState<CalculatorMode>("now");
   const [sleepInput, setSleepInput] = useState(() => getTimeInputValue(now));
   const [wakeInput, setWakeInput] = useState("07:30");
@@ -86,7 +88,7 @@ export function SleepCalculator() {
 
   return (
     <main
-      className="app-shell"
+      className={`app-shell app-shell--${runtimeEnvironment}`}
       onPointerDown={handlePointerDown}
       onPointerUp={handlePointerUp}
       onTouchStart={handleTouchStart}
