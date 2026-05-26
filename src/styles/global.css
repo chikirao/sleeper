@@ -96,7 +96,6 @@ button {
   font-family: "Oswald", "Arial Narrow", sans-serif;
   font-weight: 300;
   line-height: 1;
-  text-shadow: 0 0 2px #fff;
   transform: translate3d(0, 0, 0);
   animation: star-drift calc(var(--duration) * 4) ease-in-out var(--delay) infinite alternate;
   will-change: transform;
