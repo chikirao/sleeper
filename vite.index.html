@@ -19,22 +19,9 @@
       rel="stylesheet"
     />
     <title>Sleeper</title>
-    <script>
-      if (!/^(localhost|127\.0\.0\.1)$/.test(window.location.hostname)) {
-        const css = document.createElement("link");
-        css.rel = "stylesheet";
-        css.href = "/sleeper/assets/index.css";
-        document.head.append(css);
-      }
-    </script>
   </head>
   <body>
     <div id="root"></div>
-    <script type="module">
-      const isLocalDev = /^(localhost|127\.0\.0\.1)$/.test(window.location.hostname) && window.location.port !== "";
-
-      const entrypoint = isLocalDev ? "/src/main.tsx" : "/sleeper/assets/index.js";
-      await import(entrypoint);
-    </script>
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
