@@ -31,7 +31,7 @@ body {
   touch-action: manipulation;
   background:
     linear-gradient(180deg, #000 0 3%, rgba(0, 0, 0, 0.86) 4%, rgba(0, 0, 0, 0.4) 5%, rgba(0, 0, 0, 0.1) 8%, transparent 30%),
-    linear-gradient(180deg, #000 0 8%, #505050 15%, #d9d9d9 28%, #fff 34% 100%)
+    linear-gradient(180deg, #000 0 8%, #505050 15%, #d9d9d9 28%, #fff 34% 100%);
 }
 
 body::before {
@@ -138,7 +138,7 @@ button {
 
 .app-shell--mobile .back-button + .calculator,
 .app-shell--standalone .back-button + .calculator {
-  padding-top: clamp(150px, 24dvh, 188px);
+  padding-top: clamp(128px, 20dvh, 164px);
 }
 
 .calculator__header {
@@ -311,6 +311,74 @@ h1 {
 
   .info-block {
     font-size: 14px;
+  }
+}
+
+@media (max-width: 360px), (max-height: 760px) {
+  .app-shell--mobile,
+  .app-shell--standalone {
+    padding-inline: 16px;
+  }
+
+  .app-shell--mobile .calculator,
+  .app-shell--standalone .calculator {
+    width: min(calc(100vw - 44px), 342px);
+    padding-top: clamp(100px, 14.5dvh, 122px);
+  }
+
+  .app-shell--mobile .back-button + .calculator,
+  .app-shell--standalone .back-button + .calculator {
+    padding-top: clamp(118px, 17dvh, 138px);
+  }
+
+  .app-shell--mobile h1,
+  .app-shell--standalone h1 {
+    font-size: clamp(42px, 12.6vw, 50px);
+  }
+
+  .app-shell--mobile .result-heading,
+  .app-shell--standalone .result-heading {
+    padding-bottom: 6px;
+  }
+
+  .app-shell--mobile .result-heading time,
+  .app-shell--standalone .result-heading time {
+    margin-top: 4px;
+    font-size: clamp(46px, 14vw, 56px);
+  }
+
+  .app-shell--mobile .cycle-list,
+  .app-shell--standalone .cycle-list {
+    margin: 5px 0 10px;
+  }
+
+  .app-shell--mobile .cycle-row,
+  .app-shell--mobile .cycle-row time,
+  .app-shell--standalone .cycle-row,
+  .app-shell--standalone .cycle-row time {
+    min-height: 27px;
+    font-size: 15px;
+  }
+
+  .app-shell--mobile .info-block,
+  .app-shell--standalone .info-block {
+    gap: 5px;
+    margin-top: 10px;
+    padding: 9px 12px;
+    font-size: 13px;
+  }
+
+  .app-shell--mobile .bottom-actions,
+  .app-shell--standalone .bottom-actions {
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .app-shell--mobile .mode-button,
+  .app-shell--mobile .calculate-button,
+  .app-shell--standalone .mode-button,
+  .app-shell--standalone .calculate-button {
+    min-height: 42px;
   }
 }
 
