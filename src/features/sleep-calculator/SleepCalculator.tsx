@@ -46,6 +46,11 @@ export function SleepCalculator() {
       <section className="calculator" aria-labelledby="app-title">
         <header className="calculator__header">
           <h1 id="app-title">Sleeper</h1>
+          {mode !== "now" && (
+            <button className="back-button" type="button" onClick={() => setMode("now")}>
+              назад
+            </button>
+          )}
         </header>
 
         {mode !== "now" && (

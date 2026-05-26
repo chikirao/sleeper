@@ -30,10 +30,8 @@ body {
   overscroll-behavior: none;
   touch-action: manipulation;
   background:
-    linear-gradient(180deg, #000 0 13%, rgba(0, 0, 0, 0.92) 16%, rgba(0, 0, 0, 0.5) 21%, rgba(0, 0, 0, 0.13) 27%, transparent 34%),
-    radial-gradient(120% 48% at 18% 31%, #fff 0 36%, rgba(255, 255, 255, 0.96) 46%, rgba(255, 255, 255, 0.58) 59%, rgba(255, 255, 255, 0.14) 74%, transparent 88%),
-    radial-gradient(92% 38% at 86% 32%, rgba(255, 255, 255, 0.58) 0 28%, rgba(255, 255, 255, 0.18) 56%, transparent 82%),
-    linear-gradient(180deg, #000 0 26%, #3c3c3c 35%, #d5d5d5 44%, #fff 57% 100%);
+    linear-gradient(180deg, #000 0 16%, rgba(0, 0, 0, 0.9) 21%, rgba(0, 0, 0, 0.54) 28%, rgba(0, 0, 0, 0.18) 36%, transparent 46%),
+    linear-gradient(180deg, #000 0 29%, #3f3f3f 38%, #cfcfcf 49%, #fff 62% 100%);
 }
 
 body::before {
@@ -45,9 +43,10 @@ body::before {
   pointer-events: none;
   opacity: 0.74;
   mix-blend-mode: overlay;
+  filter: grayscale(1) contrast(1.25);
   -webkit-mask-image: linear-gradient(180deg, #000 0 47%, rgba(0, 0, 0, 0.52) 62%, transparent 82%);
   mask-image: linear-gradient(180deg, #000 0 47%, rgba(0, 0, 0, 0.52) 62%, transparent 82%);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96' viewBox='0 0 96 96'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.65' numOctaves='2' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='1.4 0 0 0 -0.22 0 1.4 0 0 -0.22 0 0 1.4 0 -0.22 0 0 0 1 0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='discrete' tableValues='0 .18 .42 .72 1'/%3E%3CfeFuncG type='discrete' tableValues='0 .18 .42 .72 1'/%3E%3CfeFuncB type='discrete' tableValues='0 .18 .42 .72 1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='96' height='96' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96' viewBox='0 0 96 96'%3E%3Cfilter id='noise' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.65' numOctaves='2' seed='7' stitchTiles='stitch' result='noise'/%3E%3CfeColorMatrix in='noise' type='saturate' values='0' result='gray'/%3E%3CfeComponentTransfer in='gray'%3E%3CfeFuncR type='discrete' tableValues='0 .18 .42 .72 1'/%3E%3CfeFuncG type='discrete' tableValues='0 .18 .42 .72 1'/%3E%3CfeFuncB type='discrete' tableValues='0 .18 .42 .72 1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='96' height='96' filter='url(%23noise)'/%3E%3C/svg%3E");
   background-size: 112px 112px;
 }
 
@@ -125,6 +124,8 @@ button {
 .calculator__header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  gap: 14px;
   margin-bottom: 8px;
   min-width: 0;
 }
@@ -247,7 +248,8 @@ h1 {
 }
 
 .mode-button,
-.calculate-button {
+.calculate-button,
+.back-button {
   min-height: 50px;
   border: 1px solid #000;
   border-radius: 0;
@@ -255,6 +257,14 @@ h1 {
   text-transform: uppercase;
   cursor: pointer;
   touch-action: manipulation;
+}
+
+.back-button {
+  flex: 0 0 auto;
+  min-width: 74px;
+  min-height: 38px;
+  padding: 0 12px;
+  font-size: 14px;
 }
 
 @media (max-width: 430px) {
@@ -362,10 +372,8 @@ h1 {
 @media (min-width: 720px) {
   body {
     background:
-      linear-gradient(180deg, #000 0 13%, rgba(0, 0, 0, 0.92) 16%, rgba(0, 0, 0, 0.5) 21%, rgba(0, 0, 0, 0.13) 27%, transparent 34%),
-      radial-gradient(84% 48% at 20% 31%, #fff 0 36%, rgba(255, 255, 255, 0.96) 46%, rgba(255, 255, 255, 0.58) 59%, rgba(255, 255, 255, 0.14) 74%, transparent 88%),
-      radial-gradient(76% 38% at 84% 32%, rgba(255, 255, 255, 0.58) 0 28%, rgba(255, 255, 255, 0.18) 56%, transparent 82%),
-      linear-gradient(180deg, #000 0 26%, #3c3c3c 35%, #d5d5d5 44%, #fff 57% 100%);
+      linear-gradient(180deg, #000 0 16%, rgba(0, 0, 0, 0.9) 21%, rgba(0, 0, 0, 0.54) 28%, rgba(0, 0, 0, 0.18) 36%, transparent 46%),
+      linear-gradient(180deg, #000 0 29%, #3f3f3f 38%, #cfcfcf 49%, #fff 62% 100%);
   }
 
   .app-shell {

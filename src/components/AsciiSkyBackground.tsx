@@ -16,9 +16,9 @@ interface StarToken {
 function createStarTokens(): StarToken[] {
   const symbols = ["*", "*", "*", "*", "*", "*", "+", "+"];
 
-  return Array.from({ length: 42 }, (_, id) => {
+  return Array.from({ length: 21 }, (_, id) => {
     const x = 2 + ((id * 31 + (id % 5) * 13) % 95);
-    const lowerEdge = x > 72 ? 78 : x < 26 ? 58 : 46;
+    const lowerEdge = x > 72 ? 78 : x < 26 ? 56 : 48;
     const rawY = (id * 19 + (id % 7) * 6) % lowerEdge;
 
     return {
@@ -26,7 +26,7 @@ function createStarTokens(): StarToken[] {
       symbol: symbols[id % symbols.length],
       x,
       y: 3 + rawY,
-      size: 20 + ((id * 7) % 15),
+      size: 40 + ((id * 7) % 30),
       opacity: 1,
       duration: 3.2 + (id % 8) * 0.42,
       delay: -(id % 17) * 0.31,
