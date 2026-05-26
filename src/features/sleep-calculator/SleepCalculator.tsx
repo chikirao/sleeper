@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { PointerEvent, TouchEvent, useMemo, useRef, useState } from "react";
 import { useNowClock } from "../../hooks/useNowClock";
 import {
   calculateSleepTimes,
@@ -20,6 +20,7 @@ export function SleepCalculator() {
   const [wakeInput, setWakeInput] = useState("07:30");
   const [confirmedSleepInput, setConfirmedSleepInput] = useState(sleepInput);
   const [confirmedWakeInput, setConfirmedWakeInput] = useState(wakeInput);
+  const edgeSwipeStart = useRef<{ x: number; y: number } | null>(null);
 
   const results = useMemo(() => {
     if (mode === "sleep") {
@@ -41,16 +42,64 @@ export function SleepCalculator() {
     setMode(nextMode);
   };
 
+  const startEdgeSwipe = (x: number, y: number) => {
+    if (mode === "now") {
+      return;
+    }
+
+    edgeSwipeStart.current = x <= 28 ? { x, y } : null;
+  };
+
+  const finishEdgeSwipe = (x: number, y: number) => {
+    const start = edgeSwipeStart.current;
+    edgeSwipeStart.current = null;
+
+    if (!start || mode === "now") {
+      return;
+    }
+
+    const deltaX = x - start.x;
+    const deltaY = Math.abs(y - start.y);
+
+    if (deltaX >= 72 && deltaY <= 48) {
+      setMode("now");
+    }
+  };
+
+  const handleTouchStart = (event: TouchEvent<HTMLElement>) => {
+    const touch = event.touches[0];
+    startEdgeSwipe(touch.clientX, touch.clientY);
+  };
+
+  const handleTouchEnd = (event: TouchEvent<HTMLElement>) => {
+    const touch = event.changedTouches[0];
+    finishEdgeSwipe(touch.clientX, touch.clientY);
+  };
+
+  const handlePointerDown = (event: PointerEvent<HTMLElement>) => {
+    startEdgeSwipe(event.clientX, event.clientY);
+  };
+
+  const handlePointerUp = (event: PointerEvent<HTMLElement>) => {
+    finishEdgeSwipe(event.clientX, event.clientY);
+  };
+
   return (
-    <main className="app-shell">
+    <main
+      className="app-shell"
+      onPointerDown={handlePointerDown}
+      onPointerUp={handlePointerUp}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+    >
+      {mode !== "now" && (
+        <button className="back-button" type="button" onClick={() => setMode("now")}>
+          назад
+        </button>
+      )}
       <section className="calculator" aria-labelledby="app-title">
         <header className="calculator__header">
           <h1 id="app-title">Sleeper</h1>
-          {mode !== "now" && (
-            <button className="back-button" type="button" onClick={() => setMode("now")}>
-              назад
-            </button>
-          )}
         </header>
 
         {mode !== "now" && (
