@@ -30,8 +30,8 @@ body {
   overscroll-behavior: none;
   touch-action: manipulation;
   background:
-    linear-gradient(180deg, #000 0 14%, rgba(0, 0, 0, 0.86) 18%, rgba(0, 0, 0, 0.4) 24%, rgba(0, 0, 0, 0.1) 30%, transparent 38%),
-    linear-gradient(180deg, #000 0 24%, #505050 30%, #d9d9d9 38%, #fff 47% 100%);
+    linear-gradient(180deg, #000 0 3%, rgba(0, 0, 0, 0.86) 4%, rgba(0, 0, 0, 0.4) 5%, rgba(0, 0, 0, 0.1) 8%, transparent 30%),
+    linear-gradient(180deg, #000 0 8%, #505050 15%, #d9d9d9 28%, #fff 34% 100%)
 }
 
 body::before {
@@ -100,7 +100,7 @@ button {
   transform: translate3d(0, 0, 0);
   animation:
     star-drift calc(var(--duration) * 4) ease-in-out var(--delay) infinite alternate,
-    star-flicker var(--duration) steps(2, end) var(--delay) infinite;
+    star-flicker var(--duration) step-end var(--delay) infinite;
 }
 
 .app-shell {
@@ -208,6 +208,10 @@ h1 {
 
 .cycle-row:first-child {
   border-top: 0;
+}
+
+.cycle-row:has(+ .cycle-row--recommended) {
+  border-bottom-color: transparent;
 }
 
 .cycle-row--recommended {
@@ -350,23 +354,12 @@ h1 {
 
 @keyframes star-flicker {
   0%,
-  28%,
+  47.999% {
+    opacity: 1;
+  }
+
+  48%,
   100% {
-    opacity: 1;
-  }
-
-  29%,
-  54% {
-    opacity: 0;
-  }
-
-  55%,
-  72% {
-    opacity: 1;
-  }
-
-  73%,
-  88% {
     opacity: 0;
   }
 }

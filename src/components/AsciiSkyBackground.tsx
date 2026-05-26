@@ -14,21 +14,21 @@ interface StarToken {
 }
 
 function createStarTokens(): StarToken[] {
-  const symbols = ["*", "*", "*", "*", "*", "*", "+", "+"];
+  const symbols = ["*", "*", "*", "+", "+"];
 
   return Array.from({ length: 21 }, (_, id) => {
     const x = 2 + ((id * 31 + (id % 5) * 13) % 95);
     const lowerEdge = x > 72 ? 78 : x < 26 ? 56 : 48;
-    const rawY = (id * 19 + (id % 7) * 6) % lowerEdge;
+    const rawY = (id * 19 + (id % 7) * 40) % lowerEdge;
 
     return {
       id,
       symbol: symbols[id % symbols.length],
       x,
-      y: 3 + rawY,
-      size: 40 + ((id * 7) % 30),
+      y: 2 + rawY,
+      size: 40 + ((id * 9) % 30),
       opacity: 1,
-      duration: 3.2 + (id % 8) * 0.42,
+      duration: 40.2 + (id % 8) * 0.42,
       delay: -(id % 17) * 0.31,
       drift: ((id % 7) - 3) * 0.42,
     };
