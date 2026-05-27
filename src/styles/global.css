@@ -152,7 +152,8 @@ button {
 
   .app-shell--mobile .back-button + .calculator,
   .app-shell--standalone .back-button + .calculator {
-    max-height: calc(var(--app-height) - max(48px, calc(env(safe-area-inset-top) + 38px)));
+    height: calc(var(--app-height) - max(12px, env(safe-area-inset-top)));
+    max-height: none;
   }
 }
 
@@ -164,8 +165,9 @@ button {
 }
 
 .back-button + .calculator {
-  max-height: calc(var(--app-height) - max(58px, calc(env(safe-area-inset-top) + 46px)));
-  padding-bottom: 14px;
+  height: calc(var(--app-height) - max(12px, env(safe-area-inset-top)));
+  max-height: none;
+  padding-bottom: max(14px, env(safe-area-inset-bottom));
   overflow-x: hidden;
   overflow-y: auto;
   overscroll-behavior: contain;
@@ -178,7 +180,8 @@ button {
 
 .app-shell--mobile .back-button + .calculator,
 .app-shell--standalone .back-button + .calculator {
-  max-height: calc(var(--app-height) - max(48px, calc(env(safe-area-inset-top) + 38px)));
+  height: calc(var(--app-height) - max(12px, env(safe-area-inset-top)));
+  max-height: none;
   padding-top: clamp(128px, 20dvh, 164px);
 }
 
@@ -332,6 +335,27 @@ h1 {
   padding: 0 10px;
   font-size: 14px;
   background: rgba(255, 255, 255, 0.92);
+}
+
+@media (max-width: 719px) {
+  .app-shell--mobile .calculator,
+  .app-shell--standalone .calculator {
+    width: min(calc(100vw - 44px), 342px);
+    max-width: 342px;
+  }
+
+  .app-shell--mobile .time-panel h2,
+  .app-shell--standalone .time-panel h2 {
+    font-size: clamp(40px, 9.6vw, 52px);
+  }
+
+  .time-panel,
+  .time-control,
+  .time-control input,
+  .calculate-button {
+    min-width: 0;
+    max-width: 100%;
+  }
 }
 
 @media (max-width: 430px) {
