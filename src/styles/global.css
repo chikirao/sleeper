@@ -570,11 +570,12 @@ h1 {
     overflow-y: auto;
     overscroll-behavior: contain;
     scrollbar-gutter: stable both-edges;
+    scrollbar-color: #6f6f6f transparent;
     scrollbar-width: thin;
   }
 
   .app-shell--desktop-browser .calculator::-webkit-scrollbar {
-    width: 6px;
+    width: 5px;
   }
 
   .app-shell--desktop-browser .calculator::-webkit-scrollbar-track {
@@ -582,7 +583,29 @@ h1 {
   }
 
   .app-shell--desktop-browser .calculator::-webkit-scrollbar-thumb {
-    background: #000;
+    min-height: 28px;
+    background: #6f6f6f;
+  }
+
+  .app-shell--desktop-browser .calculator::-webkit-scrollbar-button {
+    width: 0;
+    height: 0;
+    display: none;
+    appearance: none;
+    background: transparent;
+  }
+
+  .app-shell--desktop-browser .calculator::-webkit-scrollbar-button:vertical:start:decrement,
+  .app-shell--desktop-browser .calculator::-webkit-scrollbar-button:vertical:end:increment {
+    width: 0;
+    height: 0;
+    display: none;
+    appearance: none;
+    background: transparent;
+  }
+
+  .app-shell--desktop-browser .calculator::-webkit-scrollbar-corner {
+    background: transparent;
   }
 
   .app-shell--desktop-browser .back-button {
@@ -590,13 +613,28 @@ h1 {
     width: min(30vw, 420px);
     min-width: 340px;
     max-width: 420px;
-    min-height: 36px;
-    margin: 136px auto 10px;
-    background: rgba(255, 255, 255, 0.84);
+    min-height: 0;
+    margin: 150px auto 4px;
+    padding: 0 0 0 12px;
+    border: 0;
+    background: transparent;
+    font-size: 16px;
+    line-height: 1;
+    text-align: left;
+    text-transform: lowercase;
+  }
+
+  .app-shell--desktop-browser .back-button::before {
+    content: "<\2009";
+  }
+
+  .app-shell--desktop-browser .back-button:focus-visible {
+    outline: 1px solid currentColor;
+    outline-offset: 3px;
   }
 
   .app-shell--desktop-browser .back-button + .calculator {
-    max-height: calc(var(--app-height) - 182px);
+    max-height: calc(var(--app-height) - 170px);
     padding-top: 0;
   }
 
@@ -665,11 +703,11 @@ h1 {
   .app-shell--desktop-browser .back-button {
     width: min(27vw, 380px);
     min-width: 320px;
-    margin-top: 132px;
+    margin-top: 136px;
   }
 
   .app-shell--desktop-browser .back-button + .calculator {
-    max-height: calc(var(--app-height) - 178px);
+    max-height: calc(var(--app-height) - 156px);
   }
 
   .app-shell--desktop-browser h1 {
