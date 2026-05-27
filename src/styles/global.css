@@ -17,6 +17,7 @@
 html {
   min-width: 320px;
   height: 100%;
+  min-height: 100%;
   overflow: hidden;
   overscroll-behavior: none;
 }
@@ -25,6 +26,7 @@ body {
   position: relative;
   min-width: 320px;
   height: 100dvh;
+  min-height: 100%;
   margin: 0;
   overflow: hidden;
   overscroll-behavior: none;
@@ -61,6 +63,7 @@ button {
 
 #root {
   height: 100dvh;
+  min-height: 100%;
   overflow: hidden;
 }
 
@@ -125,10 +128,22 @@ button {
 }
 
 @supports (-webkit-touch-callout: none) {
-  .app-shell--mobile,
-  .app-shell--standalone {
+  html,
+  body,
+  #root {
     height: -webkit-fill-available;
     min-height: -webkit-fill-available;
+  }
+
+  .app-shell--mobile,
+  .app-shell--standalone {
+    height: 100%;
+    min-height: 100%;
+  }
+
+  .app-shell--mobile .back-button + .calculator,
+  .app-shell--standalone .back-button + .calculator {
+    max-height: calc(100% - max(48px, calc(env(safe-area-inset-top) + 38px)));
   }
 }
 
